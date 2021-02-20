@@ -1,0 +1,45 @@
+Part1
+Funcția matrix_to_csr preia matricea A in forma normala si creeaza vectorii values (care conțin elemente
+nenule din matrice), colind (cu indicii coloanelor elementelor nenule din A) si rowptr (cu indicii primelor
+elemente nenule din matrice) prin parcurgerea matricei si adăugarea in vectorii corespunzători a elementelor
+cerute, modificând numărul de elemente din fiecare vector.
+Funcția Jacobi_factorization returnează matricea de iteratie G_J si vectorul coloana al termenilor liberi c_J
+ce urmează sa fie folositi pentru implementarea metodei.
+Funcția Jacobi_sparse aplica calculează iterativ vectorul coloana al soluțiilor x pe care il aproximeaza la 
+fiecare pas cu o toleranta data ca parametru, folosind totodată forma CSR a matricei A si funcția 
+csr_multiplication prin care matricele in aceasta forma se înmulțesc.
+Part2
+Funcția clustering_pc realizează inițial o distribuire uniforma a punctelor cu scopul de a "inițializa" 
+centroizii, după care aduce in liste comune punctele fata de care centroidul respectiv este cel mai aproape si 
+recalculeaza poziția centroidului in funcție de acesta. Algoritmul se repeta pana când vectorul de centroizi 
+nu se mai modifica.
+Funcția compute_cost_pc preia centroizii anterior calculați, parcurge din nou punctele si calculeaza suma 
+distantelor dintre fiecare punct si centroidul de care aparține.
+Part3
+Funcția rgbHistogram primește calea către imagine, generează matricea caracteristica imaginii, dupa care 
+selectează matricea specifica pentru culorile rosu, verde si albastru, după care generează vectorul caracteristic
+de lungime count_bin*3 cu ajutorul funcției histc. Feedback: înțelegerea funcției histc mi-a luat destul de 
+mult timp, insa totuși mult mai puțin decât accumarray (pe care am renunțat sa o mai înțeleg momentan).
+Funcția hsvHistogram preia in același mod ca funcția precedenta cele 3 matrice specifice culorilor RGB, dupa 
+care realizează o transformare a celor doua prin funcția convert2hsv ce implementeaza vectorizat algoritmul 
+specificat in temă. In afara acestei transformări, procedeul se repeta. Feedback: a trebuit sa fac un cast la 
+double pentru matricile red, green si blue pe care nu am reușit sa il înțeleg in tocmai, nefiind chiar intuitiv.
+Poate după deadline am putea primi niște explicații de ce la împărțirea la 255 Octave recurgea la aproximari.
+Funcția Householder returnează matricea ortogonala Q si matricea R ce ne vor ajuta in rezolvarea sistemul de 
+ecuații următor. In implementarea algoritmului am ținut cont de posibilitatea ca numărul de coloane sa fie 
+diferit de numărul de linii.
+Funcția SST rezolva sistemul superior triunghiular la care se ajunge ca urmare a metodei Householder. Astfel,
+ se afla ultimul termen al soluție, dupa care acesta e folosita pentru calcularea următorului, procedeul 
+continuând in acest mod.
+Funcția preprocess construiește matricea caracteristica a setului de imagini primit, reținând totodată si 
+codificarea pentru fiecare imagine in y. Folosim astfel funcția rgbHistogram sau hsvHistogram, în funcție de 
+parametrul dat. Am folosit functia getImgNames implementata deja pentru a obtine numele pozelor din cele doua
+foldere din dataset.
+Funcția learn rezolva sistemul Xx * w = y, unde Xx este matricea X plus coloana bias, si "învață" vectorul w,
+folosind funcția SST.
+Funcția evaluate rezolva in sens invers sistemul anterior, realizând înmulțirea Xx*w, obținând vectorul my_y
+căruia ii comparam pentru fiecare element semnul cu cel corespunzător din vectorul y, calculând procentul de
+reușită.
+Part4
+Am refolosit majoritatea funcțiilor de la part3, modificând, conform algoritmului Mini-batch Gradient Descent, 
+modul de invatare, realizând de asemenea scăparea matricei X atât la învățare, cat si la evaluare.
